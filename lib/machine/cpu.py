@@ -89,7 +89,7 @@ class CPU:
 				max_freq = cpu_freq_helper(entry, "max")
 				try:
 					base_freq = round(get(path(entry, "cpufreq/base_frequency"), isint=True) / 1000)
-				except:
+				except (TypeError, ValueError, OSError):
 					base_freq = None
 
 				freqs[f] = {
@@ -160,7 +160,7 @@ def cpu_freq_helper(cpu_path: str, type: str):
 
 	try:
 		freq = round(freq / 1000)
-	except:
+	except (TypeError, ValueError):
 		freq = None
 
 	return freq

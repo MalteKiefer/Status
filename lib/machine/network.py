@@ -40,6 +40,6 @@ def get_default_iface_name_linux():
 					continue
 				interface = iface
 				break
-			except:
+			except (ValueError, IndexError):
 				continue
 	return interface
