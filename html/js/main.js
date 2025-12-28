@@ -19,7 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (theme) selectTheme(theme == "true", false)
 		else selectTheme(!platformIsDark(), false)
 	}
-	catch (e) {}
+	catch (e) {
+		console.warn("Failed to load theme preferences:", e.message)
+	}
 })
 
 function hashchange() {
