@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 from os import environ
 
 
@@ -157,8 +158,9 @@ class Config:
 						config_file[section] = {}
 					config_file[section][key] = CONFIG_DEFAULT[section][key]["value"]
 
-				with open(path, "w") as file:
-					print(f"Config file not found. Saving default configuration to {path}...")
+				print(f"Config file not found. Saving default configuration to {path}...")
+				fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+				with os.fdopen(fd, "w") as file:
 					file.write(json.dumps(config_file, indent=4))
 
 
