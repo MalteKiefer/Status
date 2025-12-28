@@ -108,8 +108,15 @@ function update() {
 	let xhr = new XMLHttpRequest()
 	xhr.open("GET", "api/status")
 	xhr.onload = function() {
-		get("main").classList.remove("unloaded")
-		parseData(this)
+		if (this.status >= 200 && this.status < 300) {
+			get("main").classList.remove("unloaded")
+			parseData(this)
+		} else {
+			console.warn("API request failed with status:", this.status)
+		}
+	}
+	xhr.onerror = function() {
+		console.warn("API request failed: network error")
 	}
 	xhr.send()
 }
