@@ -1,6 +1,8 @@
 import subprocess
 import json
 
+from lib.config import config
+
 
 class Docker:
 
@@ -87,6 +89,8 @@ class Docker:
 
 	def get_info(self):
 		"""Get Docker information summary."""
+		if not config.get("docker", "enabled"):
+			return None
 		if not self.is_available():
 			return None
 
