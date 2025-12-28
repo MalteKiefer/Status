@@ -89,7 +89,7 @@ class Docker:
 
 	def get_info(self):
 		"""Get Docker information summary."""
-		if not config.get("docker", "enabled"):
+		if config.get("docker", "disable"):
 			return None
 		if not self.is_available():
 			return None

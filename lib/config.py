@@ -62,11 +62,10 @@ CONFIG_DEFAULT = {
 		}
 	},
 	"docker": {
-		"enabled": {
-			"value": True,
-			"short": "D",
+		"disable": {
+			"value": False,
 			"no_value": True,
-			"desc": "enable Docker container monitoring"
+			"desc": "disable Docker container monitoring"
 		},
 	},
 	"misc": {
