@@ -125,6 +125,7 @@ function parseData(resp) {
 		updateStorage(data.storage)
 		updateNet(data_prev.network, data.network)
 		updateHost(data.host)
+		updateDocker(data.docker)
 		data_prev = data
 	}
 	catch (e) {
