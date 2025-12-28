@@ -3,6 +3,25 @@ import json
 from os import environ
 
 
+def convert_env_value(value: str, default_value):
+	"""Convert environment variable string to the type of the default value."""
+	if default_value is None:
+		return value
+	if isinstance(default_value, bool):
+		return value.lower() in ('true', '1', 'yes', 'on')
+	if isinstance(default_value, int):
+		try:
+			return int(value)
+		except ValueError:
+			return default_value
+	if isinstance(default_value, (dict, list)):
+		try:
+			return json.loads(value)
+		except json.JSONDecodeError:
+			return default_value
+	return value
+
+
 CONFIG_DEFAULT = {
 	"server": {
 		"port": {
@@ -108,8 +127,13 @@ class Config:
 		for key in environ:
 			if key.startswith(f"{ENV}_"):
 				var_name = key.replace(f"{ENV}_", "").lower()
-				if var_name in self.config and self.config[var_name] == None:
-					self.config[var_name] = environ[key]
+				if var_name in self.config and self.config[var_name] is None:
+					# Look up default value type for proper conversion
+					default_value = None
+					if var_name in conf_map:
+						section, cfg_key = conf_map[var_name].split(".")
+						default_value = CONFIG_DEFAULT[section][cfg_key]["value"]
+					self.config[var_name] = convert_env_value(environ[key], default_value)
 
 
 		# Read config from file
