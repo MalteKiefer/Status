@@ -175,9 +175,12 @@ function updateDocker(docker) {
 
 	// Hide Docker menu item if not available
 	if (!docker || !docker.available) {
-		dockerItem.style.display = "none"
+		if (dockerItem) dockerItem.style.display = "none"
 		return
 	}
+
+	// If Docker HTML elements don't exist yet, skip
+	if (!dockerItem) return
 
 	// Show Docker menu item
 	dockerItem.style.display = ""
