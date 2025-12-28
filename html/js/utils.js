@@ -99,10 +99,7 @@ function mkDiv(args, icon) {
 	let div = document.createElement((icon) ? "i" : "div")
 	if (args.id) div.id = args.id
 	if (args.className) div.className = args.className
-	if (args.text) {
-		if (args.raw_html) div.innerHTML = args.text
-		else div.innerText = args.text
-	}
+	if (args.text) div.innerText = args.text
 	return div;
 }
 
