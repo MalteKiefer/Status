@@ -1,3 +1,5 @@
+const VALID_SCREENS = ['main', 'cpu', 'memory', 'storage', 'network', 'host', 'theme']
+
 window.addEventListener("load", () => {
 	update()
 	hashchange()
@@ -24,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function hashchange() {
 	let hash = window.location.hash.slice(1)
-	if (hash == "") hash = "main"
+	if (!VALID_SCREENS.includes(hash)) hash = "main"
 	goto(hash, false)
 }
 window.addEventListener("hashchange", hashchange)
