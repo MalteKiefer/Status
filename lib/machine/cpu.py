@@ -133,8 +133,6 @@ class CPU:
 def get_stat():
 	with open('/proc/stat') as f:
 		fields = [float(column) for column in f.readline().strip().split()[1:]]
-		f.close()
-
 	return fields
 
 
