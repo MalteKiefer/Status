@@ -1,4 +1,4 @@
-const VALID_SCREENS = ['main', 'cpu', 'memory', 'storage', 'network', 'host', 'theme']
+const VALID_SCREENS = ['main', 'cpu', 'memory', 'storage', 'network', 'host', 'docker', 'theme']
 
 window.addEventListener("load", () => {
 	update()
