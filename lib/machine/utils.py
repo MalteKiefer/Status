@@ -3,17 +3,35 @@ import re
 from glob import glob
 
 
+def _validate_custom_root_path(path: str) -> str:
+	"""Validate and normalize custom root path from environment."""
+	if not path:
+		return ""
+	# Normalize path to remove redundant separators and resolve . and ..
+	normalized = os.path.normpath(path)
+	# Must be absolute path to prevent relative path traversal
+	if not os.path.isabs(normalized):
+		return ""
+	# Ensure path exists and is a directory
+	if not os.path.isdir(normalized):
+		return ""
+	return normalized
+
+
 try:
-	CUSTOM_ROOT_PATH = os.environ["STATUS_CUSTOM_ROOT_PATH"]
+	CUSTOM_ROOT_PATH = _validate_custom_root_path(os.environ["STATUS_CUSTOM_ROOT_PATH"])
 except KeyError:
 	CUSTOM_ROOT_PATH = ""
 
 
 def get(path: str, isint: bool = False, fallback = None):
 	try:
-		if os.path.exists(CUSTOM_ROOT_PATH + path):
-			path = CUSTOM_ROOT_PATH + path
-		val = open(path, "r").read().rstrip()
+		if CUSTOM_ROOT_PATH:
+			custom_path = CUSTOM_ROOT_PATH + path
+			if os.path.exists(custom_path):
+				path = custom_path
+		with open(path, "r") as f:
+			val = f.read().rstrip()
 		res = int(val) if isint else val
 	except (FileNotFoundError, ValueError):
 		res = fallback
@@ -35,8 +53,10 @@ def temp_val(raw_value: int):
 
 def ls(path: str):
 	try:
-		if os.path.exists(CUSTOM_ROOT_PATH + path):
-			path = CUSTOM_ROOT_PATH + path
+		if CUSTOM_ROOT_PATH:
+			custom_path = CUSTOM_ROOT_PATH + path
+			if os.path.exists(custom_path):
+				path = custom_path
 		files = [os.path.join(path, f) for f in os.listdir(path)]
 		return sorted(files)
 	except (FileNotFoundError, NotADirectoryError, PermissionError):
@@ -44,8 +64,10 @@ def ls(path: str):
 
 
 def ls_glob(path: str, target: str):
-	if os.path.exists(CUSTOM_ROOT_PATH + path):
-		path = CUSTOM_ROOT_PATH + path
+	if CUSTOM_ROOT_PATH:
+		custom_path = CUSTOM_ROOT_PATH + path
+		if os.path.exists(custom_path):
+			path = custom_path
 	files = glob(os.path.join(path, target))
 	return sorted(files)
 
