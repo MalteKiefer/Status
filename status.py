@@ -54,7 +54,7 @@ async def redirector(request, handler):
 
 routes.static("/", "html")
 app = web.Application(middlewares=[redirector])
-app.logger.manager.disable = 100 * config.get("misc", "debug")
+app.logger.manager.disable = 0 if config.get("misc", "debug") else 100
 app.add_routes(routes)
 
 ssl_context = None
