@@ -10,6 +10,7 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () 
 
 document.addEventListener("DOMContentLoaded", () => {
 	loadBackButtons()
+	loadNavigationButtons()
 	loadThemePicker()
 	try {
 		let accent = localStorage.getItem("statusapp-accent")
@@ -32,9 +33,16 @@ window.addEventListener("hashchange", hashchange)
 function loadBackButtons() {
 	let buttons = getClasses("back")
 	for (let button of buttons) {
-		button.onclick = () => {
-			goBack()
-		}
+		button.addEventListener("click", goBack)
+	}
+}
+
+function loadNavigationButtons() {
+	let navButtons = document.querySelectorAll("[data-goto]")
+	for (let button of navButtons) {
+		button.addEventListener("click", () => {
+			goto(button.dataset.goto)
+		})
 	}
 }
 
@@ -58,6 +66,18 @@ function loadThemePicker() {
 		accent.addEventListener("click", () => {
 			selectAccent(accent.className)
 		})
+	}
+	// Theme selection buttons
+	let themeButtons = document.querySelectorAll("[data-theme]")
+	for (let button of themeButtons) {
+		button.addEventListener("click", () => {
+			selectTheme(button.dataset.theme === "light")
+		})
+	}
+	// Auto dark mode switch
+	let autoSwitch = document.getElementById("autoDarkSwitch")
+	if (autoSwitch) {
+		autoSwitch.addEventListener("click", setAutoTheme)
 	}
 	if (!localStorage.getItem("statusapp-light")) {
 		document.querySelector("#autoDarkSwitch .checkbox").classList.add("enabled")
