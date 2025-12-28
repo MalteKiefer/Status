@@ -117,7 +117,8 @@ class Config:
 		path = path if path else "config.json"
 		if not self.config["no_config"] and path:
 			try:
-				config_file = json.loads(open(path, "r").read())
+				with open(path, "r") as f:
+					config_file = json.loads(f.read())
 				for section in config_file:
 					for key in config_file[section]:
 						CONFIG_DEFAULT[section][key]["value"] = config_file[section][key]
@@ -135,7 +136,6 @@ class Config:
 				with open(path, "w") as file:
 					print(f"Config file not found. Saving default configuration to {path}...")
 					file.write(json.dumps(config_file, indent=4))
-					file.close()
 
 
 		# Fallback values from default config
