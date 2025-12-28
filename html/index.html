@@ -23,14 +23,14 @@
 				<div class="value" id="main-device-name">N/A</div>
 			</div>
 			<div class="center titlebar">
-				<button onclick="goto('theme')">
+				<button data-goto="theme">
 					<i>palette</i>
 					<p>Theme</p>
 				</button>
 			</div>
 			<div class="contents">
 				<div class="list">
-					<div class="item clickable" onclick="goto('cpu')">
+					<div class="item clickable" data-goto="cpu">
 						<i>memory</i>
 						<div class="text">
 							<div class="name">CPU</div>
@@ -38,7 +38,7 @@
 						</div>
 						<i class="arrow"></i>
 					</div>
-					<div class="item clickable" onclick="goto('memory')">
+					<div class="item clickable" data-goto="memory">
 						<i>memory_alt</i>
 						<div class="text">
 							<div class="name">Memory</div>
@@ -46,7 +46,7 @@
 						</div>
 						<i class="arrow"></i>
 					</div>
-					<div class="item clickable" onclick="goto('storage')">
+					<div class="item clickable" data-goto="storage">
 						<i>hard_drive</i>
 						<div class="text">
 							<div class="name">Storage</div>
@@ -54,7 +54,7 @@
 						</div>
 						<i class="arrow"></i>
 					</div>
-					<div class="item clickable" onclick="goto('network')">
+					<div class="item clickable" data-goto="network">
 						<i>settings_ethernet</i>
 						<div class="text">
 							<div class="name">Network</div>
@@ -62,7 +62,7 @@
 						</div>
 						<i class="arrow"></i>
 					</div>
-					<div class="item clickable" onclick="goto('host')">
+					<div class="item clickable" data-goto="host">
 						<i>cloud</i>
 						<div class="text">
 							<div class="name">Host</div>
@@ -165,7 +165,7 @@
 			<div class="contents">
 				<div class="center">
 					<div class="themes">
-						<div class="theme light" onclick="selectTheme(true)">
+						<div class="theme light" data-theme="light">
 							<div class="preview">
 								<div class="box">
 									<i>chevron_right</i>
@@ -175,7 +175,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="theme dark" onclick="selectTheme(false)">
+						<div class="theme dark" data-theme="dark">
 							<div class="preview">
 								<div class="box">
 									<i>chevron_right</i>
@@ -203,7 +203,7 @@
 
 				<div class="center">
 					<div class="list" style="width: 100%;">
-						<div class="item clickable" id="autoDarkSwitch" onclick="setAutoTheme()">
+						<div class="item clickable" id="autoDarkSwitch">
 							<i>contrast</i>
 							<div class="text">
 								<div class="name">Use platform theme</div>
