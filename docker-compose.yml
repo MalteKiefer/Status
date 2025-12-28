@@ -11,5 +11,6 @@ services:
       - "/mnt:/mnt:ro"
       - "/media:/media:ro"
       - "/run/media:/run/media:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
     network_mode: "host"
     restart: "unless-stopped"
