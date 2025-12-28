@@ -44,7 +44,7 @@ function goto(target, updateHash = true) {
 	if (updateHash) window.location.hash = target
 	let toShow = get(target)
 	let screens = getClasses("screen")
-	for (screen of screens) {
+	for (let screen of screens) {
 		if (toShow == screen) screen.classList.remove("hidden")
 		else screen.classList.add("hidden")
 	}
