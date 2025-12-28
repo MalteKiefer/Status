@@ -167,3 +167,64 @@ function updateHost(host) {
 	mkItem("host-list", "memory", "App memory", parseSize(host.app_memory, "B"))
 	mkItem("host-list", "speed", "Load averages", host.loadavg.join(", "))
 }
+
+
+var docker_last = []
+function updateDocker(docker) {
+	let dockerItem = get("main-docker-item")
+
+	// Hide Docker menu item if not available
+	if (!docker || !docker.available) {
+		if (dockerItem) dockerItem.style.display = "none"
+		return
+	}
+
+	// If Docker HTML elements don't exist yet, skip
+	if (!dockerItem) return
+
+	// Show Docker menu item
+	dockerItem.style.display = ""
+
+	// Update main screen summary
+	let summary = `${docker.running} running`
+	if (docker.stopped > 0) {
+		summary += `, ${docker.stopped} stopped`
+	}
+	set("main-docker", summary)
+
+	// Update bar
+	let progress = docker.total > 0 ? docker.running / docker.total : 0
+	mkBar("docker-bar",
+		progress, docker.running, `of ${docker.total}`,
+		`${docker.total} container${s(docker.total)} total`,
+		`${docker.running} running, ${docker.stopped} stopped`
+	)
+
+	// Update container list
+	for (let container of docker.containers) {
+		let stateIcon = container.state === "running" ? "play_circle" : "stop_circle"
+		let values = [container.status]
+
+		if (container.cpu) {
+			values.push(`CPU: ${container.cpu}, Mem: ${container.memory_percent}`)
+		}
+		if (container.image) {
+			values.push(`Image: ${container.image}`)
+		}
+
+		mkItem("docker-list", stateIcon, container.name, values, container.id)
+	}
+
+	// Clean removed containers
+	if (docker_last.length > 0) {
+		let currentIds = docker.containers.map(c => c.id)
+		for (let lastContainer of docker_last) {
+			if (!currentIds.includes(lastContainer.id)) {
+				let elem = document.getElementById(`docker-list-${lastContainer.id}`)
+				if (elem) elem.remove()
+			}
+		}
+	}
+
+	docker_last = docker.containers
+}

@@ -67,6 +67,24 @@ docker-compose up -d
 App should be available on [localhost:9090](http://localhost:9090).
 
 
+## :whale: Docker Monitoring
+
+Status can monitor your Docker containers and display their status, CPU and memory usage.
+
+**Features:**
+- Container count (running/stopped) on main screen
+- Detailed container list with resource usage
+- Auto-hides when Docker is not available
+
+**Requirements:**
+- Docker socket must be accessible (mounted in docker-compose.yml by default)
+- Can be disabled via `--docker-disable` or `STATUS_DOCKER_DISABLE=true`
+
+| Config file          | Environment variable      | Command line argument |
+|----------------------|---------------------------|-----------------------|
+| `docker.disable`     | `STATUS_DOCKER_DISABLE`   | `--docker-disable`    |
+
+
 ## :wrench: Configuration
 
 Status can be configured in multiple ways:
@@ -89,6 +107,7 @@ Config keys are named slightly differently under different ways of configuration
 | **Example #1** | `server.port`       | `STATUS_SERVER_PORT`        | `--server-port`       |
 | **Example #2** | `server.address`    | `STATUS_SERVER_ADDRESS`     | `--server-address`    |
 | **Example #3** | `misc.debug`        | `STATUS_MISC_DEBUG`         | `--misc-debug`        |
+| **Example #4** | `docker.disable`    | `STATUS_DOCKER_DISABLE`     | `--docker-disable`    |
 
 Command line offers `--config` (or `-c`) to set custom config location.
 

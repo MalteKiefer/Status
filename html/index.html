@@ -70,6 +70,14 @@
 						</div>
 						<i class="arrow"></i>
 					</div>
+					<div class="item clickable" id="main-docker-item" onclick="goto('docker')" style="display: none;">
+						<i>deployed_code</i>
+						<div class="text">
+							<div class="name">Docker</div>
+							<div class="value" id="main-docker">N/A</div>
+						</div>
+						<i class="arrow"></i>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -151,6 +159,20 @@
 			</div>
 			<div class="contents">
 				<div class="list" id="host-list"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Docker screen -->
+	<div class="screen hidden" id="docker">
+		<div class="wrapper">
+			<div class="header">
+				<i class="back"></i>
+				<div class="title">Docker</div>
+			</div>
+			<div class="contents">
+				<div class="bar" id="docker-bar"></div>
+				<div class="list" id="docker-list"></div>
 			</div>
 		</div>
 	</div>
